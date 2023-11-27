@@ -66,3 +66,30 @@ func P256() ShortWeierstrassCurve {
 	c.Curve.n = n
 	return c
 }
+
+func Curve25519() MontgomeryCurve {
+	c := MontgomeryCurve{}
+	c.Curve.Name = "curve25519"
+	c.Curve.a = big.NewInt(486662)
+	c.Curve.b = big.NewInt(1)
+	p, ok := new(big.Int).SetString("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed", 16)
+	if !ok {
+		log.Panic("curve25519")
+	}
+	c.Curve.p = p
+	n, ok := new(big.Int).SetString("1000000000000000000000000000000014def9dea2f79cd65812631a5cf5d3ed", 16)
+	if !ok {
+		log.Panic("curve25519")
+	}
+	c.Curve.n = n
+	G_x, ok := new(big.Int).SetString("9", 16)
+	if !ok {
+		log.Panic("curve25519")
+	}
+	G_y, ok := new(big.Int).SetString("20ae19a1b8a086b4e01edd2c7748d14c923d4d7e6d7c61b229e9c5a27eced3d9", 16)
+	if !ok {
+		log.Panic("curve25519")
+	}
+	c.G = &ECPoint{G_x, G_y}
+	return c
+}

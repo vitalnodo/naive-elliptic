@@ -8,7 +8,7 @@ import (
 	naiveelliptic "github.com/vitalnodo/naive-elliptic"
 )
 
-var curves = []naiveelliptic.ECPointOperations{naiveelliptic.Secp256k1(), naiveelliptic.P256()}
+var curves = []naiveelliptic.ECPointOperations{naiveelliptic.Secp256k1(), naiveelliptic.P256(), naiveelliptic.Curve25519()}
 
 func TestCurve(t *testing.T) {
 	for i := range curves {
