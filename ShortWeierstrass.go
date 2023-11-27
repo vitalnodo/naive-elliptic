@@ -49,6 +49,9 @@ func (curve ShortWeierstrassCurve) AddECPoints(a, b ECPoint) (c ECPoint) {
 	m_num := new(big.Int).Sub(b.Y, a.Y)
 	m_den := new(big.Int).Sub(b.X, a.X)
 	m_den = m_den.ModInverse(m_den, curve.p)
+	if m_den == nil {
+		m_den = big.NewInt(1)
+	}
 	m := new(big.Int).Mul(m_num, m_den)
 	m = m.Mod(m, curve.p)
 
@@ -102,8 +105,6 @@ func (curve ShortWeierstrassCurve) ScalarMult(k big.Int, a ECPoint) (c ECPoint) 
 		}
 		bit -= 1
 	}
-	R0.X.Mod(R0.X, curve.p)
-	R0.Y.Mod(R0.Y, curve.p)
 	return R0
 }
 
