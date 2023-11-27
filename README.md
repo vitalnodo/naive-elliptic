@@ -16,6 +16,8 @@ Supported operations:
 * StringToECPoint
 * PrintECPoint
 
+For real-world applications, one should consider https://github.com/mit-plv/fiat-crypto
+
 ## links
 https://safecurves.cr.yp.to/
 
