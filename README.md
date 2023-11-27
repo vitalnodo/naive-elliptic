@@ -9,7 +9,7 @@ Supported operations:
 * ECPointGen
 * IsOnCurveCheck
 * AddECPoints
-* DoubleECPoints
+* DoubleECPoint
 * ScalarMult
 * ECPointToString
 * StringToECPoint

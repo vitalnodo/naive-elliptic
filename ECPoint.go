@@ -14,7 +14,7 @@ type ECPointOperations interface {
 	ECPointGen(x, y *big.Int) (point ECPoint)
 	IsOnCurveCheck(a ECPoint) (c bool)
 	AddECPoints(a, b ECPoint) (c ECPoint)
-	DoubleECPoints(a ECPoint) (c ECPoint)
+	DoubleECPoint(a ECPoint) (c ECPoint)
 	ScalarMult(k big.Int, a ECPoint) (c ECPoint)
 	ECPointToString(point ECPoint) (s string)
 	StringToECPoint(s string) (point ECPoint)

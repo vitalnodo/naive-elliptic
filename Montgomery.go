@@ -96,7 +96,7 @@ func (curve MontgomeryCurve) AddECPoints(a, b ECPoint) (c ECPoint) {
 }
 
 // 2P
-func (curve MontgomeryCurve) DoubleECPoints(a ECPoint) (c ECPoint) {
+func (curve MontgomeryCurve) DoubleECPoint(a ECPoint) (c ECPoint) {
 	zero := big.NewInt(0)
 	if a.X.Cmp(zero) == 0 && a.Y.Cmp(zero) == 0 {
 		return a
@@ -183,10 +183,10 @@ func (curve MontgomeryCurve) ScalarMult(k big.Int, a ECPoint) (c ECPoint) {
 	for bit >= 0 {
 		if k.Bit(bit) == 0 {
 			R1 = curve.AddECPoints(R0, R1)
-			R0 = curve.DoubleECPoints(R0)
+			R0 = curve.DoubleECPoint(R0)
 		} else {
 			R0 = curve.AddECPoints(R0, R1)
-			R1 = curve.DoubleECPoints(R1)
+			R1 = curve.DoubleECPoint(R1)
 		}
 		bit -= 1
 	}
