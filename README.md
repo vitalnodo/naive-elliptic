@@ -17,6 +17,8 @@ Supported operations:
 * PrintECPoint
 
 ## links
+https://safecurves.cr.yp.to/
+
 https://hyperelliptic.org/EFD/
 
 https://neuromancer.sk/std/
