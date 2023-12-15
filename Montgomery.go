@@ -29,13 +29,13 @@ func (curve MontgomeryCurve) ECPointGen(x, y *big.Int) (point ECPoint) {
 // DOES P ∈ CURVE?
 func (curve MontgomeryCurve) IsOnCurveCheck(a ECPoint) (c bool) {
 	lhs := new(big.Int).Mul(a.Y, a.Y)
-	lhs = lhs.Mul(curve.b, lhs)
+	lhs = lhs.Mul(curve.B, lhs)
 	xxx := new(big.Int).Mul(a.X, a.X)
 	xxx = xxx.Mul(xxx, a.X)
-	ax := new(big.Int).Mul(curve.a, a.X)
+	ax := new(big.Int).Mul(curve.A, a.X)
 	ax = ax.Mul(big.NewInt(2), ax)
 	rhs := new(big.Int).Add(xxx, ax)
-	rhs = rhs.Add(rhs, curve.b)
+	rhs = rhs.Add(rhs, curve.B)
 	return lhs.Cmp(rhs) == 0
 }
 
@@ -53,45 +53,45 @@ func (curve MontgomeryCurve) AddECPoints(a, b ECPoint) (c ECPoint) {
 	num := new(big.Int).Set(b.Y)
 	num.Sub(num, a.Y)
 	num.Mul(num, num)
-	num.Mul(num, curve.b)
+	num.Mul(num, curve.B)
 
 	den := new(big.Int).Set(b.X)
 	den.Sub(den, a.X)
 	den.Mul(den, den)
-	den.ModInverse(den, curve.p)
+	den.ModInverse(den, curve.P)
 
 	c.X = new(big.Int).Set(num)
 	c.X.Mul(c.X, den)
-	c.X.Sub(c.X, curve.a)
+	c.X.Sub(c.X, curve.A)
 	c.X.Sub(c.X, a.X)
 	c.X.Sub(c.X, b.X)
-	c.X.Mod(c.X, curve.p)
+	c.X.Mod(c.X, curve.P)
 
 	c.Y = big.NewInt(2)
 	c.Y.Mul(c.Y, a.X)
 	c.Y.Add(c.Y, b.X)
-	c.Y.Add(c.Y, curve.a)
+	c.Y.Add(c.Y, curve.A)
 
 	num.Sub(b.Y, a.Y)
 	den.Sub(b.X, a.X)
-	den.ModInverse(den, curve.p)
+	den.ModInverse(den, curve.P)
 	c.Y.Mul(c.Y, num)
 	c.Y.Mul(c.Y, den)
 
 	num.Sub(b.Y, a.Y)
 	tmp1 := new(big.Int).Mul(num, num)
 	tmp1.Mul(tmp1, num)
-	num.Mul(tmp1, curve.b)
+	num.Mul(tmp1, curve.B)
 
 	den.Sub(b.X, a.X)
 	tmp1 = new(big.Int).Mul(den, den)
 	den.Mul(tmp1, den)
-	den.ModInverse(den, curve.p)
+	den.ModInverse(den, curve.P)
 
 	tmp1.Mul(num, den)
 	c.Y.Sub(c.Y, tmp1)
 	c.Y.Sub(c.Y, a.Y)
-	c.Y.Mod(c.Y, curve.p)
+	c.Y.Mod(c.Y, curve.P)
 	return c
 }
 
@@ -107,42 +107,42 @@ func (curve MontgomeryCurve) DoubleECPoint(a ECPoint) (c ECPoint) {
 	num.Mul(num, a.X)
 	num.Mul(num, a.X)
 	tmp1 := big.NewInt(2)
-	tmp1.Mul(tmp1, curve.a)
+	tmp1.Mul(tmp1, curve.A)
 	tmp1.Mul(tmp1, a.X)
 	num.Add(num, tmp1)
 	num.Add(num, big.NewInt(1))
 	num.Mul(num, num)
-	num.Mul(num, curve.b)
+	num.Mul(num, curve.B)
 	den := big.NewInt(2)
-	den.Mul(den, curve.b)
+	den.Mul(den, curve.B)
 	den.Mul(den, a.Y)
 	den.Mul(den, den)
-	den.ModInverse(den, curve.p)
+	den.ModInverse(den, curve.P)
 	c.X = new(big.Int).Mul(num, den)
-	c.X.Sub(c.X, curve.a)
+	c.X.Sub(c.X, curve.A)
 	c.X.Sub(c.X, a.X)
 	c.X.Sub(c.X, a.X)
-	c.X.Mod(c.X, curve.p)
+	c.X.Mod(c.X, curve.P)
 
 	c.Y = big.NewInt(2)
 	c.Y.Mul(c.Y, a.X)
 	c.Y.Add(c.Y, a.X)
-	c.Y.Add(c.Y, curve.a)
+	c.Y.Add(c.Y, curve.A)
 
 	num = big.NewInt(3)
 	num.Mul(num, a.X)
 	num.Mul(num, a.X)
 
 	tmp1 = big.NewInt(2)
-	tmp1.Mul(tmp1, curve.a)
+	tmp1.Mul(tmp1, curve.A)
 	tmp1.Mul(tmp1, a.X)
 	num.Add(num, tmp1)
 	num.Add(num, big.NewInt(1))
 
 	den = big.NewInt(2)
-	den.Mul(den, curve.b)
+	den.Mul(den, curve.B)
 	den.Mul(den, a.Y)
-	den.ModInverse(den, curve.p)
+	den.ModInverse(den, curve.P)
 	c.Y.Mul(c.Y, num)
 	c.Y.Mul(c.Y, den)
 
@@ -151,7 +151,7 @@ func (curve MontgomeryCurve) DoubleECPoint(a ECPoint) (c ECPoint) {
 	num.Mul(num, a.X)
 
 	tmp1 = big.NewInt(2)
-	tmp1.Mul(tmp1, curve.a)
+	tmp1.Mul(tmp1, curve.A)
 	tmp1.Mul(tmp1, a.X)
 
 	num.Add(num, tmp1)
@@ -159,19 +159,19 @@ func (curve MontgomeryCurve) DoubleECPoint(a ECPoint) (c ECPoint) {
 
 	tmp2 := new(big.Int).Mul(num, num)
 	num.Mul(tmp2, num)
-	num.Mul(num, curve.b)
+	num.Mul(num, curve.B)
 
 	den = big.NewInt(2)
-	den.Mul(den, curve.b)
+	den.Mul(den, curve.B)
 	den.Mul(den, a.Y)
 
 	tmp2 = new(big.Int).Mul(den, den)
 	den.Mul(tmp2, den)
-	den.ModInverse(den, curve.p)
+	den.ModInverse(den, curve.P)
 	tmp1.Mul(num, den)
 	c.Y.Sub(c.Y, tmp1)
 	c.Y.Sub(c.Y, a.Y)
-	c.Y.Mod(c.Y, curve.p)
+	c.Y.Mod(c.Y, curve.P)
 	return c
 }
 
@@ -190,8 +190,8 @@ func (curve MontgomeryCurve) ScalarMult(k big.Int, a ECPoint) (c ECPoint) {
 		}
 		bit -= 1
 	}
-	R0.X.Mod(R0.X, curve.p)
-	R0.Y.Mod(R0.Y, curve.p)
+	R0.X.Mod(R0.X, curve.P)
+	R0.Y.Mod(R0.Y, curve.P)
 	return R0
 }
 

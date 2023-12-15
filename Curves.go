@@ -8,18 +8,18 @@ import (
 func Secp256k1() ShortWeierstrassCurve {
 	c := ShortWeierstrassCurve{}
 	c.Curve.Name = "secp256k1"
-	c.Curve.a = big.NewInt(0)
-	c.Curve.b = big.NewInt(7)
+	c.Curve.A = big.NewInt(0)
+	c.Curve.B = big.NewInt(7)
 	p, ok := new(big.Int).SetString("fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f", 16)
 	if !ok {
 		log.Panic("secp256k1")
 	}
-	c.Curve.p = p
+	c.Curve.P = p
 	n, ok := new(big.Int).SetString("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", 16)
 	if !ok {
 		log.Panic("secp256k1")
 	}
-	c.Curve.n = n
+	c.Curve.N = n
 	G_x, ok := new(big.Int).SetString("79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798", 16)
 	if !ok {
 		log.Panic("secp256k1")
@@ -39,17 +39,17 @@ func P256() ShortWeierstrassCurve {
 	if !ok {
 		log.Panic("P256")
 	}
-	c.Curve.a = a
+	c.Curve.A = a
 	b, ok := new(big.Int).SetString("5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b", 16)
 	if !ok {
 		log.Panic("P256")
 	}
-	c.Curve.b = b
+	c.Curve.B = b
 	p, ok := new(big.Int).SetString("ffffffff00000001000000000000000000000000ffffffffffffffffffffffff", 16)
 	if !ok {
 		log.Panic("P256")
 	}
-	c.Curve.p = p
+	c.Curve.P = p
 	G_x, ok := new(big.Int).SetString("6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296", 16)
 	if !ok {
 		log.Panic("P256")
@@ -63,25 +63,25 @@ func P256() ShortWeierstrassCurve {
 	if !ok {
 		log.Panic("P256")
 	}
-	c.Curve.n = n
+	c.Curve.N = n
 	return c
 }
 
 func Curve25519() MontgomeryCurve {
 	c := MontgomeryCurve{}
 	c.Curve.Name = "curve25519"
-	c.Curve.a = big.NewInt(486662)
-	c.Curve.b = big.NewInt(1)
+	c.Curve.A = big.NewInt(486662)
+	c.Curve.B = big.NewInt(1)
 	p, ok := new(big.Int).SetString("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed", 16)
 	if !ok {
 		log.Panic("curve25519")
 	}
-	c.Curve.p = p
+	c.Curve.P = p
 	n, ok := new(big.Int).SetString("1000000000000000000000000000000014def9dea2f79cd65812631a5cf5d3ed", 16)
 	if !ok {
 		log.Panic("curve25519")
 	}
-	c.Curve.n = n
+	c.Curve.N = n
 	G_x, ok := new(big.Int).SetString("9", 16)
 	if !ok {
 		log.Panic("curve25519")

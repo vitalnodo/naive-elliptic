@@ -6,9 +6,9 @@ import (
 
 type Curve struct {
 	Name string
-	a    *big.Int
-	b    *big.Int
-	p    *big.Int
-	n    *big.Int
+	A    *big.Int
+	B    *big.Int
+	P    *big.Int
+	N    *big.Int
 	G    *ECPoint
 }

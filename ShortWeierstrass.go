@@ -31,9 +31,9 @@ func (curve ShortWeierstrassCurve) IsOnCurveCheck(a ECPoint) (c bool) {
 	lhs := new(big.Int).Mul(a.Y, a.Y)
 	xxx := new(big.Int).Mul(a.X, a.X)
 	xxx = xxx.Mul(xxx, a.X)
-	ax := new(big.Int).Mul(curve.a, a.X)
+	ax := new(big.Int).Mul(curve.A, a.X)
 	rhs := new(big.Int).Add(xxx, ax)
-	rhs = rhs.Add(rhs, curve.b)
+	rhs = rhs.Add(rhs, curve.B)
 	return lhs.Cmp(rhs) == 0
 }
 
@@ -48,22 +48,22 @@ func (curve ShortWeierstrassCurve) AddECPoints(a, b ECPoint) (c ECPoint) {
 	}
 	m_num := new(big.Int).Sub(b.Y, a.Y)
 	m_den := new(big.Int).Sub(b.X, a.X)
-	m_den = m_den.ModInverse(m_den, curve.p)
+	m_den = m_den.ModInverse(m_den, curve.P)
 	if m_den == nil {
 		m_den = big.NewInt(1)
 	}
 	m := new(big.Int).Mul(m_num, m_den)
-	m = m.Mod(m, curve.p)
+	m = m.Mod(m, curve.P)
 
 	c.X = new(big.Int).Mul(m, m)
 	c.X = c.X.Sub(c.X, a.X)
 	c.X = c.X.Sub(c.X, b.X)
-	c.X = c.X.Mod(c.X, curve.p)
+	c.X = c.X.Mod(c.X, curve.P)
 
 	c.Y = new(big.Int).Sub(a.X, c.X)
 	c.Y = c.Y.Mul(m, c.Y)
 	c.Y = c.Y.Sub(c.Y, a.Y)
-	c.Y = c.Y.Mod(c.Y, curve.p)
+	c.Y = c.Y.Mod(c.Y, curve.P)
 	return c
 }
 
@@ -75,18 +75,18 @@ func (curve ShortWeierstrassCurve) DoubleECPoint(a ECPoint) (c ECPoint) {
 	}
 	lambda := new(big.Int).Mul(a.X, a.X)
 	lambda = lambda.Mul(big.NewInt(3), lambda)
-	lambda = lambda.Add(lambda, curve.a)
+	lambda = lambda.Add(lambda, curve.A)
 	lambda_den := new(big.Int).Mul(big.NewInt(2), a.Y)
-	lambda_den = lambda_den.ModInverse(lambda_den, curve.p)
+	lambda_den = lambda_den.ModInverse(lambda_den, curve.P)
 	lambda = lambda.Mul(lambda, lambda_den)
 	c.X = new(big.Int).Mul(lambda, lambda)
 	c.X = c.X.Sub(c.X, new(big.Int).Mul(big.NewInt(2), a.X))
-	c.X = c.X.Mod(c.X, curve.p)
+	c.X = c.X.Mod(c.X, curve.P)
 
 	c.Y = new(big.Int).Sub(a.X, c.X)
 	c.Y = c.Y.Mul(lambda, c.Y)
 	c.Y = c.Y.Sub(c.Y, a.Y)
-	c.Y = c.Y.Mod(c.Y, curve.p)
+	c.Y = c.Y.Mod(c.Y, curve.P)
 	return c
 }
 
